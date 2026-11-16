@@ -418,6 +418,8 @@ class PequesMontarModuleFrontController extends ModuleFrontController
     private function rematar()
     {
         Search::indexation(true);
+        // Ajustes de la versión: textos para buscadores y nombre de la página con todos los productos.
+        $this->module->actualizar();
         Tools::clearSmartyCache();
         Tools::clearXMLCache();
         Media::clearCache();

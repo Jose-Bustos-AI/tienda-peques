@@ -101,4 +101,19 @@
       </div>
     </div>
   </section>
+
+  <section class="peq-faq" aria-labelledby="peq-faq-titulo">
+    <div class="peq-faq__cab">
+      <p class="peq-ceja peq-ceja--oscura">Antes de pedir</p>
+      <h2 class="peq-titulo" id="peq-faq-titulo">Preguntas <em>frecuentes</em></h2>
+      <p>Lo que más nos preguntan quienes buscan un regalo y no saben por dónde empezar.</p>
+    </div>
+    <div class="peq-faq__lista">
+      <details class="peq-revela" open><summary>¿Cómo sé si es para su edad?</summary><p>Cada ficha lleva la edad recomendada y una frase sobre a quién le va a gustar. Si dudas, el buscador de regalos de esta página te propone hasta tres juguetes según la edad, lo que le gusta y tu presupuesto.</p></details>
+      <details class="peq-revela"><summary>¿Lo enviáis envuelto para regalo?</summary><p>Sí. Al finalizar la compra puedes pedir el envoltorio por 2 € y escribir una nota para quien lo recibe.</p></details>
+      <details class="peq-revela"><summary>¿Cuánto tarda y cuánto cuesta el envío?</summary><p>El envío estándar llega en 48-72 h y cuesta 3,95 €; es gratis a partir de 40 €. El exprés llega en 24 h por 6,95 €.</p></details>
+      <details class="peq-revela"><summary>¿Y si ya lo tiene o no le gusta?</summary><p>Tienes 30 días para cambiarlo o devolverlo, siempre que el juguete esté sin usar y en su caja.</p></details>
+      <details class="peq-revela"><summary>¿Tengo que crear una cuenta para comprar?</summary><p>No. Puedes comprar como invitado, solo con tu correo y la dirección de entrega.</p></details>
+    </div>
+  </section>
 </div>

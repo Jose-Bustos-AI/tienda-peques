@@ -57,6 +57,50 @@
 		calcular();
 	}
 
+	// Carrito: cuánto falta para el envío gratis.
+	var rejilla = document.querySelector('body#cart .cart-grid');
+	if (rejilla && window.prestashop) {
+		var GRATIS = 40;
+		var euros = function (n) { return n.toFixed(2).replace('.', ',') + ' €'; };
+		var barra = document.createElement('div');
+		barra.className = 'peq-envio';
+		barra.hidden = true;
+		barra.innerHTML = '<p class="peq-envio__texto" aria-live="polite"></p><div class="peq-envio__pista" aria-hidden="true"><span></span></div>';
+		rejilla.parentNode.insertBefore(barra, rejilla);
+		var textoEnvio = barra.querySelector('.peq-envio__texto'), relleno = barra.querySelector('.peq-envio__pista span');
+		var pintarEnvio = function (carrito) {
+			var s = carrito && carrito.subtotals;
+			if (!s || !s.products || !carrito.products_count) { barra.hidden = true; return; }
+			var total = s.products.amount - (s.discounts ? Math.abs(s.discounts.amount) : 0);
+			var falta = GRATIS - total;
+			barra.hidden = false;
+			barra.classList.toggle('peq-envio--hecho', falta <= 0);
+			textoEnvio.textContent = falta > 0 ? 'Te faltan ' + euros(falta) + ' para el envío gratis.' : 'Ya tienes el envío estándar gratis.';
+			relleno.style.width = Math.max(4, Math.min(100, total / GRATIS * 100)) + '%';
+		};
+		pintarEnvio(prestashop.cart);
+		// Al cambiar una cantidad o un cupón, se vuelve a pedir el carrito al servidor.
+		var esperaEnvio = null;
+		var refrescarEnvio = function () {
+			clearTimeout(esperaEnvio);
+			esperaEnvio = setTimeout(function () {
+				var url = prestashop.urls.pages.cart;
+				fetch(url + (url.indexOf('?') < 0 ? '?' : '&') + 'ajax=1&action=update', { headers: { 'X-Requested-With': 'XMLHttpRequest', Accept: 'application/json' }, credentials: 'same-origin' })
+					.then(function (r) { return r.json(); })
+					.then(function (d) { if (d && d.cart) pintarEnvio(d.cart); })
+					.catch(function () {});
+			}, 500);
+		};
+		if (prestashop.on) {
+			prestashop.on('updatedCart', function (e) {
+				if (e && e.resp && e.resp.cart) pintarEnvio(e.resp.cart); else refrescarEnvio();
+			});
+		}
+		if ('MutationObserver' in window) {
+			new MutationObserver(refrescarEnvio).observe(rejilla, { childList: true, subtree: true, characterData: true });
+		}
+	}
+
 	// Textos que la traducción de PrestaShop deja en inglés o suenan raros.
 	var CAMBIOS = [
 		['Back to ', 'Volver a '], ['Continue to ', 'Continuar a '], ['Next: ', 'Siguiente: '], ['Ahorre un ', 'Ahorras '], ['Quiero mi pedido sea envuelto', 'Quiero que mi pedido sea envuelto'],

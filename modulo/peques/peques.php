@@ -20,7 +20,7 @@ class Peques extends PaymentModule
     {
         $this->name = 'peques';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.0';
+        $this->version = '1.1.1';
         $this->author = 'Dania360';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -159,6 +159,49 @@ class Peques extends PaymentModule
     public function hookDisplayFooterAfter()
     {
         return '<div class="peques-pie-base">© Peques · Tienda de ejemplo hecha por <a href="https://tiendas.dania360.com/">Dania360</a> con PrestaShop · Fotos creadas para la marca</div>';
+    }
+
+    /* ---------- Puesta al día de una tienda ya instalada ---------- */
+
+    /**
+     * Aplica los ajustes de la versión actual sobre la tienda instalada: textos para buscadores,
+     * nombre de la página con todos los productos y cachés. Se puede ejecutar las veces que haga falta.
+     */
+    public function actualizar()
+    {
+        $hecho = [];
+        $idiomas = Language::getIDs(false);
+
+        // Portada: título y descripción para buscadores y para compartir.
+        $meta = Meta::getMetaByPage('index', (int) Configuration::get('PS_LANG_DEFAULT'));
+        if ($meta && !empty($meta['id_meta'])) {
+            $m = new Meta((int) $meta['id_meta']);
+            foreach ($idiomas as $id) {
+                $m->title[$id] = 'Peques · Juguetes de madera y educativos que duran más que la infancia';
+                $m->description[$id] = 'Juguetes de madera, algodón y colores suaves para cada edad, con buscador de regalos, envoltorio con nota y envío gratis desde 40 €.';
+            }
+            $hecho[] = 'portada ' . ($m->save() ? 'ok' : 'fallo');
+        }
+
+        // La página con todos los productos se llamaba "Inicio".
+        $cat = new Category((int) Configuration::get('PS_HOME_CATEGORY'));
+        if (Validate::isLoadedObject($cat)) {
+            foreach ($idiomas as $id) {
+                $cat->name[$id] = 'Todos los juguetes';
+                $cat->link_rewrite[$id] = 'juguetes';
+                $cat->description[$id] = '<p>Primeros juguetes, juego simbólico, construcciones y aire libre: todos los juguetes de Peques, de madera y algodón.</p>';
+                $cat->meta_title[$id] = 'Todos los juguetes';
+                $cat->meta_description[$id] = 'Primeros juguetes, juego simbólico, construcciones y aire libre: todos los juguetes de Peques, de madera y algodón.';
+            }
+            $hecho[] = 'coleccion ' . ($cat->save() ? 'ok' : 'fallo');
+        }
+
+        Tools::clearSmartyCache();
+        Media::clearCache();
+        Configuration::updateValue('PEQUES_VER', $this->version);
+        $hecho[] = 'version ' . $this->version;
+
+        return implode(' | ', $hecho);
     }
 
     /* ---------- Pago de prueba ---------- */

@@ -18,7 +18,7 @@ modulo/peques/views/                    Plantilla de la portada, CSS sobre el te
 - PrestaShop 9.2 con el tema oficial Hummingbird, en el hosting de Hostinger, con su propio subdominio y certificado de seguridad
 - Módulo propio para PrestaShop que añade la portada, el buscador de regalos, la edad en cada ficha, los estilos, el aviso de tienda de prueba y el pago de prueba
 - Paleta suave (crema, coral, mostaza y menta) y tipografías Fredoka y Nunito servidas desde la propia tienda
-- Portada con foto, buscador de regalos, categorías en círculo, productos destacados e historia de la tienda; en el móvil la foto va arriba y el texto debajo
+- Portada con foto, buscador de regalos, categorías en círculo, productos destacados, historia de la tienda y preguntas frecuentes desplegables; en el móvil la foto va arriba y el texto debajo
 - Tienda, carrito y pago en español, también los textos que PrestaShop deja en inglés o con erratas
 
 ## Catálogo y compra
@@ -28,17 +28,21 @@ modulo/peques/views/                    Plantilla de la portada, CSS sobre el te
 - Ficha técnica de cada juguete (edad, material, medidas, piezas)
 - Ofertas con precio tachado y etiqueta de descuento
 - Fotos de producto creadas para la marca
+- Página "Todos los juguetes" con los 12 productos y su propia dirección
 - Dos transportistas: envío estándar a 3,95 € y gratis desde 40 €, y exprés en 24 h a 6,95 €
 - Envoltorio de regalo por 2 € con nota, que se elige al finalizar la compra
 - Cupón de bienvenida BIENVENIDA10 con un 10 % de descuento
+- Aviso en el carrito de cuánto falta para el envío gratis, con barra de progreso
 - Compra como invitado, sin tener que crear cuenta
 - Pago de prueba propio que no pide tarjeta y deja el pedido como pagado, con su factura
-- Dos pedidos de prueba completos: cocinita en oferta con cupón, envío gratis y envoltorio con nota, y desde el móvil con variante de modelo y envío exprés
+- Tres pedidos de prueba completos: cocinita en oferta con cupón, envío gratis y envoltorio con nota; desde el móvil con variante de modelo y envío exprés; y otro desde el móvil tras la última actualización, con dos muñecos, envío gratis y envoltorio con nota
 
 ## Detalles
 - Sin módulos de pago: lo propio está en un módulo hecho a medida
 - Buscador de regalos: edad, gustos (construir, imaginar, moverse, descubrir) y presupuesto; propone hasta tres juguetes y, si no hay nada en ese presupuesto, enseña los más cercanos
 - Montaje automático del catálogo, las combinaciones, los transportistas, el envoltorio, el cupón y el pago desde el propio módulo
+- El módulo se actualiza sobre la tienda instalada, sin reinstalarla ni perder pedidos
+- Título y descripción para buscadores en la portada y en la página con todos los juguetes
 - Lista para conectar Redsys, Bizum o Stripe cuando sea una tienda real
 
 ## Cómo instalarlo
